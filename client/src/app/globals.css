@@ -9,3 +9,18 @@ body {
 .flex-center {
     @apply flex items-center justify-center;
 }
+
+.grid_mansory {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 247.6px);
+    grid-auto-rows: 20px;
+    grid-gap: 10px;
+}
+
+.small {
+    grid-row-end: span 10;
+}
+
+.big {
+    grid-row-end: span 16;
+}
