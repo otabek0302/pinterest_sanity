@@ -9,8 +9,8 @@ export default {
       type: 'string',
     },
     {
-      name: 'about',
-      title: 'About',
+      name: 'description',
+      title: 'Description',
       type: 'string',
     },
     {

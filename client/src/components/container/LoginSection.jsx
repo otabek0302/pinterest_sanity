@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { IoLogoGoogle } from "react-icons/io"
 
-const BottomSection = () => {
+const LoginSection = () => {
     return (
         <section className="overflow-hidden h-screen relative">
             <div className="absolute inset-0 -z-10">
@@ -67,4 +67,4 @@ const BottomSection = () => {
     )
 }
 
-export default BottomSection
+export default LoginSection;
