@@ -20,24 +20,33 @@ const AuthForm = ({ auth }) => {
     const [password, setPassword] = useState("");
     const [birthday, setBirthday] = useState("");
 
+    console.log(session);
+
     useEffect(() => {
         if (status === "authenticated") {
             router.push("/");
         }
     }, [status])
 
-    console.log(session);
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (auth === "login") {
             try {
+                setLoading(true);
                 const res = await signIn('sanity-login', {
                     redirect: false,
                     email: email,
                     password: password
                 });
+                if (res.ok) {
+                    setLoading(false);
+                    router.push("/");
+                } else {
+                    setLoading(false);
+                    setError(res.error);
+                }
             } catch (error) {
+                setError(error.message);
                 throw new Error(error.message);
             }
         }
@@ -48,7 +57,15 @@ const AuthForm = ({ auth }) => {
                     password: password,
                     birthday: birthday,
                 });
+                if (res.ok) {
+                    setLoading(false);
+                    router.push("/");
+                } else {
+                    setLoading(false);
+                    setError(res.error);
+                }
             } catch (error) {
+                setError(error.message);
                 throw new Error(error.message);
             }
         }
@@ -104,19 +121,14 @@ const AuthForm = ({ auth }) => {
                         }
 
                         <button type="submit" className="w-full py-2 px-5 bg-primary hover:bg-primary-dark text-base text-white font-bold text-center rounded-[20px] cursor-pointer">Continue</button>
+                        {
+                            error && <p className="text-xs text-error font-normal text-center">{error}</p>
+                        }
                     </form>
 
                     <p className="my-2 text-sm text-copy font-bold text-center">OR</p>
 
                     <div className="mt-2.5">
-                        {
-                            auth === "login" && (
-                                <button type="button" className="relative w-full py-2 px-5 mb-2.5 bg-[#1877f2] hover:bg-[#1877f9] text-base text-white font-normal text-center rounded-[20px] cursor-pointer">
-                                    <IoLogoGoogle className="absolute left-2 text-blue-400" />
-                                    Continue with Facebook
-                                </button>
-                            )
-                        }
                         <button type="button" onClick={signIn} className="relative w-full py-2 px-5 bg-background hover:bg-foreground border border-border text-base text-copy font-normal text-center rounded-[20px] cursor-pointer">
                             <IoLogoGoogle className="absolute left-2 text-blue-400" />
                             Continue with Google

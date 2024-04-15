@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 import { IoIosArrowDown, IoIosNotifications } from "react-icons/io";
 import { BiSolidMessageRoundedDots } from "react-icons/bi";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Header = () => {
     const pathname = usePathname();
@@ -70,7 +71,7 @@ const Header = () => {
                 }
 
 
-                <div className='flex gap-5 items-center'>
+                <div className='flex items-center'>
                     <div>
                         {
                             location === "/" && status === "unauthenticated"
@@ -93,13 +94,29 @@ const Header = () => {
                                 )
                         }
                     </div>
-                    <div>
+                    <div className='ml-5'>
                         {
                             status === "authenticated"
                                 ? (<Link href="/profile"><div className='relative w-8 h-8 rounded-full overflow-hidden'><Image src="/logo.png" fill alt="Avatar" className='object-cover object-center' /></div></Link>)
                                 : (<div className='flex gap-2.5'><Link href="/auth/login"><button className='py-2 px-3.5 bg-primary hover:bg-primary-dark text-sm text-white font-semibold text-center rounded-[24px] cursor-pointer'>Login</button></Link><Link href="/auth/singup"><button className='py-2 px-3.5 bg-background hover:bg-gray-200 border border-border text-sm text-copy font-semibold text-center rounded-[24px] cursor-pointer'>Sing up</button></Link></div>)
                         }
-
+                    </div>
+                    <div className='relative ml-1'>
+                        <div className='relative p-0.5 flex-center rounded-full overflow-hidden hover:bg-gray-200'>
+                            <MdKeyboardArrowDown className='text-xl' />
+                        </div>
+                        <div className='absolute w-96 top-12 -right-2.5 p-2.5 rounded-xl bg-gray-300'>
+                            <div className='flex'>
+                                <Link href="/profile">
+                                    <div className='relative w-8 h-8 rounded-full overflow-hidden'><Image src="/logo.png" fill alt="Avatar" className='object-cover object-center' /></div>
+                                </Link>
+                                <div className='flex-col gap-1.5'>
+                                    <h2>Amonov Otabek</h2>
+                                    <span>Personal</span>
+                                    <span>otabekjon0302@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div >
 
