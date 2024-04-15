@@ -2,18 +2,31 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { client } from "@/utils/sanity";
 import { useEffect, useState } from "react";
 import { IoMdAdd, IoMdOptions } from "react-icons/io";
 import Saved from "@/components/sections/Saved";
 import Created from "@/components/sections/Created";
+import { useSession } from "next-auth/react";
+import FilterDropDown from "@/components/ui/FilterDropDown";
+import LinkDropDown from "@/components/ui/LinkDropDown";
 
 const Profile = () => {
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
+  const { status } = useSession()
   const pathname = usePathname();
   const userId = pathname?.split("/")?.pop();
+  const router = useRouter();
+
+  const [show, setSHow] = useState("saved")
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/")
+    }
+  }, [status])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,8 +51,6 @@ const Profile = () => {
     };
     fetchUser();
   }, [userId]);
-
-  console.log(user);
 
   if (loading) {
     return (
@@ -82,32 +93,23 @@ const Profile = () => {
 
       {/* Profile controller */}
       <div className="flex-center gap-5 pb-4">
-        <button className="text-lg text-copy font-bold border-b-4 border-gray-800">
+        <button className={`text-lg text-copy font-bold ${show === "saved" && "border-b-4 border-gray-800"}`} onClick={() => setSHow("saved")}>
           Created
         </button>
-        <button className="text-lg text-copy font-bold border-b-4 border-gray-800">
+        <button className={`text-lg text-copy font-bold ${show === "created" && "border-b-4 border-gray-800"}`} onClick={() => setSHow("created")}>
           Saved
         </button>
       </div>
       <div className="flex justify-between px-5">
-        <Link
-          href="/pin-creation-tool"
-          className="p-2.5 text-base text-copy font-bold leading-normal hover:bg-border rounded-full cursor-pointer"
-        >
-          <IoMdOptions className="text-3xl text-copy-lighter" />
-        </Link>
-        <Link
-          href="/desk-creation-tool"
-          className="p-2.5 text-base text-copy font-bold leading-normal hover:bg-border rounded-full cursor-pointer"
-        >
-          <IoMdAdd className="text-3xl text-copy-lighter" />
-        </Link>
+        <FilterDropDown />
+        <LinkDropDown />
       </div>
 
       {/* Posts  */}
       <div className="px-5">
-        {/* <Saved /> */}
-        <Created />
+        {
+          show === "saved" ? <Saved /> : <Created />
+        }
       </div>
     </section>
   );
