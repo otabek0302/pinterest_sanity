@@ -1,4 +1,3 @@
-// import NextAuth from "next-auth";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { SanityAdapter, SanityCredentials } from "next-auth-sanity";
@@ -10,6 +9,8 @@ const handler = NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
+      // console.log(session);
+      // console.log(token);
       if (token?.email) session.user.email = token.email;
       return session;
     },
