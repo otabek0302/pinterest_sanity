@@ -12,7 +12,7 @@ const ProfileDropDown = ({ user }) => {
     <div className="relative">
       <button className="p-1.5 overflow-hidden rounded-full  hover:bg-gray-200" onClick={() => setOpen(!open)}>
         {
-          open ? <MdKeyboardArrowDown className="text-xl" /> : <MdKeyboardArrowUp className="text-xl" />
+          open ? <MdKeyboardArrowUp className="text-xl" /> : <MdKeyboardArrowDown className="text-xl" />
         }
       </button>
 
