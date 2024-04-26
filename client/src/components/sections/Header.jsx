@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProfileDropDown from "../ui/ProfileDropDown";
 import { IoIosArrowDown, IoIosNotifications } from "react-icons/io";
 import { BiSolidMessageRoundedDots } from "react-icons/bi";
@@ -16,14 +16,32 @@ const Header = () => {
     const { data: session, status } = useSession();
     const [location, setLocation] = useState("/");
     const [open, setOpen] = useState(false);
+    const [searchResult, setSearchResult] = useState(false);
     const [user, setUser] = useState(null);
     const email = session?.user?.email;
+    const searchInputRef = useRef(null);
 
     useEffect(() => {
         if (pathname) {
             setLocation(pathname);
         }
     }, [pathname]);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (event.target !== searchInputRef.current) {
+                setSearchResult(false);
+            }
+        };
+
+        // Add event listener to detect clicks outside the search result dropdown
+        document.addEventListener("click", handleClickOutside);
+
+        // Cleanup function to remove event listener
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
 
     useEffect(() => {
@@ -48,10 +66,6 @@ const Header = () => {
         };
         fetchUser();
     }, [email]);
-
-    if (loading) {
-        return "Loading...";
-    }
 
     return (
         <header className="px-7">
@@ -104,12 +118,30 @@ const Header = () => {
                     )}
                 </div>
                 {location !== "/" && (
-                    <div className="flex-1 bg-gray-200 rounded-full relative">
+                    <div className="flex-1 bg-gray-200 rounded-full relative z-50">
                         <input
+                            ref={searchInputRef}
                             type="text"
                             className="w-full h-full p-5 rounded-full focus:outline-blue-300 focus:outline-4 bg-transparent"
                             placeholder="Search for easy dinners, fashion, etc."
+                            onFocus={() => setSearchResult(!searchResult)}
                         />
+                        <div className={`absolute right-0 top-16 w-full py-5 px-1.5 border rounded-xl shadow-xl bg-background ${searchResult ? "block" : "hidden"}`}>
+                            <div className="mt-5">
+                                <span className="text-sm font-normal text-copy-lighter ml-1.5">Account</span>
+                                <ul className="flex flex-col gap-1.5">
+                                    <li className="px-3.5 py-2.5 text-base text-copy font-bold leading-normal cursor-pointer hover:bg-gray-200 hover:rounded-lg">
+                                        About
+                                    </li>
+                                    <li className="px-3.5 py-2.5 text-base text-copy font-bold leading-normal cursor-pointer hover:bg-gray-200 hover:rounded-lg">
+                                        Business
+                                    </li>
+                                    <li className="px-3.5 py-2.5 text-base text-copy font-bold leading-normal cursor-pointer hover:bg-gray-200 hover:rounded-lg">
+                                        Press
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 )}
 

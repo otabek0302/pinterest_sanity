@@ -168,6 +168,7 @@ const AuthForm = ({ auth }) => {
                         )}
 
                         <button
+                            disabled={loading && true}
                             type="submit"
                             className={`w-full py-2 px-5 bg-primary hover:bg-primary-dark text-base text-white font-bold text-center rounded-[20px] cursor-pointer ${loading && "animate-pulse"}`}
                         >

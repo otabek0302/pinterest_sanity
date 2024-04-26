@@ -1,6 +1,37 @@
+"use client"
 import Mansory from "@/components/sections/Mansory"
+import { feedQuery, searchQuery } from "@/utils/data";
+import { client } from "@/utils/sanity";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react"
 
 const Ideas = () => {
+    const [pins, setPins] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const { categoryId } = useParams();
+    
+    useEffect(() => {
+        setLoading(true)
+        if (categoryId) {
+            const query = searchQuery(categoryId)
+            client.fetch(query).then((data) => {
+                console.log(data);
+                setPins(data);
+                setLoading(false);
+            })
+        }else{
+            client.fetch(feedQuery).then((data) => {
+                setPins(data);
+                setLoading(false);
+            })
+
+        }
+    }, [categoryId])
+
+    if (loading) {
+        return <div>Loadin......</div>
+    }
+
     return (
         <section className='container mx-auto'>
 
@@ -47,7 +78,7 @@ const Ideas = () => {
                 </div>
             </div>
 
-            <Mansory title="Explore popular ideas" arr={[3,4,5,2,7,2,9,10,11,3,4,2,6,2,8,9,10]} />
+            <Mansory title="Explore popular ideas" arr={pins} />
         </section>
     )
 }

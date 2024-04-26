@@ -14,7 +14,7 @@ export default {
       type: 'string',
     },
     {
-      name: 'destionation',
+      name: 'destination',
       title: 'Destination',
       type: 'url',
     },
@@ -22,6 +22,12 @@ export default {
       name: 'category',
       title: 'Category',
       type: 'string',
+    },
+    {
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{type: 'string'}],
     },
     {
       name: 'image',
@@ -32,6 +38,12 @@ export default {
       },
     },
     {
+      name: 'save',
+      title: 'Save',
+      type: 'array',
+      of: [{type: 'save'}],
+    },
+    {
       name: 'userId',
       title: 'UserID',
       type: 'string',
@@ -40,12 +52,6 @@ export default {
       name: 'postedBy',
       title: 'PostedBy',
       type: 'postedBy',
-    },
-    {
-      name: 'save',
-      title: 'Save',
-      type: 'array',
-      of: [{type: 'save'}],
     },
     {
       name: 'comments',

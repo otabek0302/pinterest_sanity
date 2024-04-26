@@ -2,6 +2,7 @@ export default {
   name: 'user',
   title: 'User',
   type: 'document',
+  liveEdit: true,
   fields: [
     {
       name: 'username',

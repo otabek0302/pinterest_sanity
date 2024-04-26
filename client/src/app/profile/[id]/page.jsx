@@ -11,6 +11,7 @@ import Created from "@/components/sections/Created";
 import { useSession } from "next-auth/react";
 import FilterDropDown from "@/components/ui/FilterDropDown";
 import LinkDropDown from "@/components/ui/LinkDropDown";
+import { fetchMyPins, fetchMySavedPins } from "@/utils/data";
 
 const Profile = () => {
   const { status } = useSession()
@@ -18,7 +19,9 @@ const Profile = () => {
   const userId = pathname?.split("/")?.pop();
   const router = useRouter();
 
-  const [show, setSHow] = useState("saved")
+  const [show, setSHow] = useState("created")
+  const [pins, setPins] = useState([])
+  const [save, setSave] = useState([])
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -29,6 +32,39 @@ const Profile = () => {
   }, [status])
 
   useEffect(() => {
+    if (show == "created") {
+      const fetchPins = async () => {
+        setLoading(true);
+        try {
+          const query = await fetchMyPins(user?._id);
+          const data = await client.fetch(query);
+          setPins(data);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching pins:", error);
+          setLoading(false);
+        }
+      };
+      fetchPins();
+    } else {
+      const fetchPins = async () => {
+        setLoading(true);
+        try {
+          const query = await fetchMySavedPins(user?._id);
+          const data = await client.fetch(query);
+          setSave(data);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching pins:", error);
+          setLoading(false);
+        }
+      };
+      fetchPins();
+    }
+  }, [show, user]);
+
+
+  useEffect(() => {
     const fetchUser = async () => {
       if (userId) {
         try {
@@ -37,6 +73,7 @@ const Profile = () => {
             `*[_type == 'user' && _id == '${userId}']`
           );
           if (data === null || data.length === 0) {
+            setUser(data[0])
             setLoading(false);
             console.log("No user found for id:", userId);
           } else {
@@ -106,9 +143,9 @@ const Profile = () => {
       </div>
 
       {/* Posts  */}
-      <div className="px-5">
+      <div className="px-5 py-10">
         {
-          show === "saved" ? <Saved /> : <Created />
+          show === "created" ? <Saved arr={save} /> : <Created arr={pins} />
         }
       </div>
     </section>
