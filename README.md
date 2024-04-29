@@ -1,6 +1,6 @@
 # Pinterest Clone
 
-![Pinterest Clone](link_to_your_project_image)
+![Pinterest Clone](https://i.ibb.co/PFCvfZB/Screenshot-2024-04-30-at-04-39-52.png)
 
 ## Description
 
