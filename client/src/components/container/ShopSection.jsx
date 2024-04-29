@@ -33,7 +33,7 @@ const ShopSection = () => {
                     <div className="flex-center flex-col px-52 text-center">
                         <h2 className="text-6xl text-[rgb(195,25,82);] font-black">See it, make it, try it, do it</h2>
                         <p className="text-2xl text-[rgb(195,25,82);] font-normal my-4 max-w-md text-center">The best part of Pinterest is discovering new things and ideas from people around the world.</p>
-                        <Link href="/" className="my-5">
+                        <Link href="/ideas" className="my-5">
                             <span className="px-10 py-5 bg-[#e60023] rounded-full text-white">Explore</span>
                         </Link>
                     </div>

@@ -49,14 +49,14 @@ const Mansory = ({ title, arr }) => {
 
     return (
         <div>
-            <h3 className='block text-center py-10'>{title}</h3>
+            <h3 className='block text-center py-10 text-3xl text-copy font-bold leading-tight'>{title}</h3>
             {
                 arr?.length ?
                     (
                         <div className='grid_mansory'>
-                            {arr?.map(({ postedBy, image, _id, save }, i) => (
+                            {arr && arr?.map(({ postedBy, image, _id, save }, i) => (
                                 <div key={i} className={`${i / 2 == 1 ? "small" : "big"} bg-slate-200 rounded-3xl overflow-hidden relative`}>
-                                    <Image src={urlFor(image?.asset?.url)?.url()} fill alt={postedBy?.username} className="object-cover object-center z-0" />
+                                    <Image src={urlFor(image?.asset?.url)?.url() || ""} fill alt={postedBy?.username || "image"} className="object-cover object-center z-0" />
                                     <div className="h-full p-4 flex flex-col justify-between relative z-[2] bg-black bg-opacity-60 pin-card">
                                         <div className="flex justify-between items-center relative -top-52">
                                             <span className="text-base text-white font-bold line-clamp-1 cursor-pointer">{postedBy?.username}</span>
@@ -99,7 +99,8 @@ const Mansory = ({ title, arr }) => {
                             ))}
                         </div>
                     )
-                    : (<div className="h-96 flex-center"><h1> There is no pins add yours <a href="/pin/create">Add</a> </h1></div> )
+                    : arr?.length < 0 ? (<div className="h-96 flex-center"><h1> There is no pins add yours <a href="/pin/create">Add</a> </h1></div>)
+                        : (<div className="h-96 flex-center"><h1> Loading </h1></div>)
             }
 
         </div>

@@ -17,7 +17,7 @@ const fetchUser = () => {
             `*[_type == "user" && email == '${email}']`
           );
           if (data === null || data.length === 0) {
-            console.log("No user found for email:", email);
+            console.log(email);
           } else {
             setUser(data[0]);
           }
@@ -28,6 +28,14 @@ const fetchUser = () => {
     };
     fetchUser();
   }, [email]);
+
+  useEffect(() => {
+    if (user) {
+      const userData = JSON.stringify(user);
+
+      localStorage.setItem("user", userData);
+    }
+  }, [user]);
 
   return user;
 };

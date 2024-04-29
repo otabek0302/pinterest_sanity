@@ -62,11 +62,11 @@ const AuthForm = ({ auth }) => {
                     password: password,
                     birthday: birthday,
                 });
-                if (res.ok) {
+                if (res) {
                     setSuccess("Your account created successfully !");
                     setLoading(false);
                     setTimeout(() => {
-                        router.push("/");
+                        router.push("/auth/login");
                     }, 3000);
                 }
             } catch (error) {
@@ -168,7 +168,7 @@ const AuthForm = ({ auth }) => {
                         )}
 
                         <button
-                            disabled={loading && true}
+                            disabled={loading}
                             type="submit"
                             className={`w-full py-2 px-5 bg-primary hover:bg-primary-dark text-base text-white font-bold text-center rounded-[20px] cursor-pointer ${loading && "animate-pulse"}`}
                         >

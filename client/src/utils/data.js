@@ -96,10 +96,44 @@ export const feedQuery = `*[_type == 'pin'] | order(_createdAt, desc){
      },
 }`;
 
-export const fetchCategory = `*[_type == 'category']{
+export const fetchAllCategories = `*[_type == 'category']{
     _id,
     title,
 }`;
+
+export const fetchCategory = (slug) => {
+  const query = `*[_type == 'category' && title match '${slug}*']{
+    _id,
+    title,
+    description
+  }`;
+
+  return query;
+};
+
+export const fetchPinByCategory = (slug) => {
+  const query = `*[_type == 'pin' && category match '${slug}*'] | order(_createdAt desc){
+    image {
+      asset -> {
+          url
+      }
+  },
+  _id,
+  title,
+  description,
+  destination,
+  userId,
+  category,
+  tags,
+  postedBy -> {
+      _id,
+      username,
+      picture
+   },
+  }`;
+
+  return query;
+};
 
 export const pinDetailQuery = (pinId) => {
   const query = `*[_type == "pin" && _id == '${pinId}']{
@@ -168,3 +202,25 @@ export const pinDetailMorePinQuery = async (pin) => {
   }`;
   return query;
 };
+export const fetchPinsHero = `*[_type == 'pin'] | order(_createdAt, desc){
+  image {
+      asset -> {
+          url
+      }
+  },
+  _id,
+  destination,
+   postedBy -> {
+      _id,
+      username,
+      picture,
+   },
+   save[]{
+      _key,
+      postedBy -> {
+          _id,
+          username,
+          picture
+      },
+   },
+}`;

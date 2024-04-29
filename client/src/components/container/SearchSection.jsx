@@ -36,7 +36,7 @@ const SearchSection = () => {
             <div className="flex-center flex-col">
               <h2 className="text-6xl text-[rgb(195,25,82);] font-black">Search for an idea</h2>
               <p className="text-2xl text-[rgb(195,25,82);] font-normal my-4 max-w-md text-center">What do you want to try next? Think of something you’re into—like “easy chicken dinner”—and see what you find.</p>
-              <Link href="/" className="my-5">
+              <Link href="/ideas" className="my-5">
                 <span className="px-10 py-5 bg-[#e60023] rounded-full text-white">Explore</span>
               </Link>
             </div>

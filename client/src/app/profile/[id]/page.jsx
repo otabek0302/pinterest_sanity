@@ -5,13 +5,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { client } from "@/utils/sanity";
 import { useEffect, useState } from "react";
-import { IoMdAdd, IoMdOptions } from "react-icons/io";
 import Saved from "@/components/sections/Saved";
 import Created from "@/components/sections/Created";
 import { useSession } from "next-auth/react";
 import FilterDropDown from "@/components/ui/FilterDropDown";
 import LinkDropDown from "@/components/ui/LinkDropDown";
 import { fetchMyPins, fetchMySavedPins } from "@/utils/data";
+import Loader from "@/components/ui/Loader";
 
 const Profile = () => {
   const { status } = useSession()
@@ -91,7 +91,7 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="absolute inset-0 bg-white flex-center">Loading....</div>
+      <Loader />
     );
   }
 
@@ -101,29 +101,26 @@ const Profile = () => {
       <div className="max-w-xl mx-auto flex-center flex-col mb-7">
         <div className="relative w-32 h-32 rounded-full overflow-hidden">
           <Image
-            src={user?.image ? user?.image : "/user.png"}
-            fill
-            alt="Profile picture"
-            className="object-cover object-center"
+            src={user?.picture ? urlFor(user.picture.url).url() : '/user.png'}
+            width={300}
+            height={300}
+            alt={user?.username || ""}
+            className="h-full object-cover object-center z-[-1]"
           />
         </div>
-        <h3 className="mt-1.5 text-4xl text-copy font-bold">Amonov Otabek</h3>
+        <h3 className="mt-1.5 text-4xl text-copy font-bold">{user?.username}</h3>
         <div className="flex gap-0.5 my-3.5">
           <Image src="/logo.png" width={24} height={24} alt="Profile picture" />
-          <span className="text-sm text-copy-lighter font-normal">
-            otabekamonov
+          <span className="text-sm text-copy-lighter font-normal lowercase">
+            {user?.username || ""}
           </span>
         </div>
-        <div className="mb-1.5 flex gap-2.5 text-base text-copy font-normal">
-          <span>2 Followers</span>
-          <span>10 Following</span>
-        </div>
-        <div className="flex gap-5">
+        <div className="flex gap-5 mt-10">
           <button className="min-w-[80px] min-h-[48px] px-4 py-3 bg-gray-200 flex-center rounded-full text-base text-copy font-bold">
             Share
           </button>
           <button className="min-w-[80px] min-h-[48px] px-4 py-3 bg-gray-200 flex-center rounded-full text-base text-copy font-bold">
-            <Link href="/setting">Setting</Link>
+            <Link href={`/profile/update`}>Setting</Link>
           </button>
         </div>
       </div>

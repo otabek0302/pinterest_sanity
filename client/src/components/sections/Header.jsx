@@ -9,8 +9,11 @@ import ProfileDropDown from "../ui/ProfileDropDown";
 import { IoIosArrowDown, IoIosNotifications } from "react-icons/io";
 import { BiSolidMessageRoundedDots } from "react-icons/bi";
 import { client } from "@/utils/sanity";
+import fetchUser from "@/utils/fetchUser";
 
 const Header = () => {
+    const userFetched = fetchUser();
+    console.log(userFetched);
     const pathname = usePathname();
     const [loading, setLoading] = useState(false);
     const { data: session, status } = useSession();
@@ -42,7 +45,6 @@ const Header = () => {
             document.removeEventListener("click", handleClickOutside);
         };
     }, []);
-
 
     useEffect(() => {
         const fetchUser = async () => {

@@ -2,8 +2,17 @@ export default {
   name: 'user',
   title: 'User',
   type: 'document',
-  liveEdit: true,
   fields: [
+    {
+      name: 'first_name',
+      title: 'First Name',
+      type: 'string',
+    },
+    {
+      name: 'last_name',
+      title: 'Last Name',
+      type: 'string',
+    },
     {
       name: 'username',
       title: 'Username',
@@ -27,7 +36,10 @@ export default {
     {
       name: 'picture',
       title: 'Picture',
-      type: 'url',
+      type: 'image',
+      option: {
+        hotspot: true,
+      },
     },
     {
       name: 'emailVerified',

@@ -9,7 +9,12 @@ const handler = NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      if (token?.email) session.user.email = token.email;
+      if (token?.email) {
+        session.user.email = token.email;
+        if (token.id) {
+          session.user.id = token.id;
+        }
+      }
       return session;
     },
   },

@@ -12,7 +12,7 @@ const SaveSection = () => {
                         <div className="flex-center flex-col">
                             <h2 className="text-6xl text-[rgb(0,107,108);] font-black">Save ideas you like</h2>
                             <p className="text-2xl text-[rgb(0,107,108);] font-normal my-4 max-w-md text-center">Collect your favorites so you can get back to them later.</p>
-                            <Link href="/" className="my-5">
+                            <Link href="/ideas" className="my-5">
                                 <span className="px-8 py-5 bg-[#e60023] rounded-full text-white">Explore</span>
                             </Link>
                         </div>
