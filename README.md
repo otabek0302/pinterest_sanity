@@ -35,7 +35,7 @@ This project is a clone of the popular social media platform Pinterest. It allow
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your_username/pinterest-clone.git
+   git clone https://github.com/otabek0302/pinterest-clone-with-sanity.git
 1. **Install Dependencies**:
    cd pinterest-clone
    npm install
